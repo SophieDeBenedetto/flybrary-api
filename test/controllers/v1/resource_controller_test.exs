@@ -1,4 +1,38 @@
 defmodule FlybraryApi.V1.ResourceControllerTest do
+#   # use ExUnit.Case, async: false
+
+#   # use Plug.Test
+#   use FlybraryApi.ConnCase
+#   alias FlybraryApi.Resource
+#   alias FlybraryApi.Repo 
+#   alias Ecto.Adapters.SQL
+
+#   # setup do 
+#   #   SQL.begin_test_transaction(Repo)
+
+#   #   on_exit fn -> 
+#   #     SQL.rollback_test_transaction(Repo)
+#   #   end
+#   # end
+
+#   test "/v1/resources returns a JSON collection of resources" do 
+#     resources_as_json = 
+#       %Resource{title: "Test Resource", description: "really test resource", url: "www.example.com", topic: "Testing"}
+#       |> Repo.insert
+#       |> List.wrap
+
+#     response = conn(:get, "/v1/resources") |> send_request
+
+#     assert response.status == 200
+#     assert response.resp_body == resources_as_json
+#   end
+
+#   defp send_request(conn) do 
+#     conn
+#     |> put_private(:plug_skip_csrf_protection, true)
+#     |> FlybraryApi.V1.Endpoint.call([])
+#   end
+# end
   use FlybraryApi.ConnCase
 
   alias FlybraryApi.Resource
@@ -11,12 +45,17 @@ defmodule FlybraryApi.V1.ResourceControllerTest do
   end
 
   test "lists all entries on index", %{conn: conn} do
+    resource = Repo.insert! %Resource{title: "Test Resource", description: "really test resource", url: "www.example.com", topic: "Testing"}
     conn = get conn, v1_resource_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
+    assert json_response(conn, 200)["data"] == [%{"id" => resource.id,
+      "title" => resource.title,
+      "description" => resource.description,
+      "topic" => resource.topic,
+      "url" => resource.url}]
   end
 
   test "shows chosen resource", %{conn: conn} do
-    resource = Repo.insert! %Resource{}
+    resource = Repo.insert! %Resource{title: "Test Resource", description: "really test resource", url: "www.example.com", topic: "Testing"}
     conn = get conn, v1_resource_path(conn, :show, resource)
     assert json_response(conn, 200)["data"] == %{"id" => resource.id,
       "title" => resource.title,
