@@ -2,6 +2,7 @@ defmodule FlybraryApi.Router do
   use FlybraryApi.Web, :router
 
   pipeline :api do
+    plug CORSPlug, [origin: "http://localhost:4200"]
     plug :accepts, ["json"]
   end
 
