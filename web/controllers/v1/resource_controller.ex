@@ -5,6 +5,12 @@ defmodule FlybraryApi.V1.ResourceController do
 
   plug :scrub_params, "resource" when action in [:create, :update]
 
+  def options(conn, _params) do 
+    conn
+    |> put_status(200)
+    |> text(nil)
+  end
+
   def index(conn, _params) do
     resources = Repo.all(Resource)
     render(conn, "index.json", resources: resources)

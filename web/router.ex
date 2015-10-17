@@ -11,6 +11,7 @@ defmodule FlybraryApi.Router do
 
     scope "/v1", V1, as: :v1 do
       resources "/resources", ResourceController
+      options "/resources*anything", ResourceController, :options
     end
   end
 end

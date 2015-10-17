@@ -51,7 +51,7 @@ defmodule FlybraryApi.V1.ResourceControllerTest do
       "title" => resource.title,
       "description" => resource.description,
       "topic" => resource.topic,
-      "url" => resource.url}]
+      "url" => resource.url}] 
   end
 
   test "shows chosen resource", %{conn: conn} do
