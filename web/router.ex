@@ -2,7 +2,7 @@ defmodule FlybraryApi.Router do
   use FlybraryApi.Web, :router
 
   pipeline :api do
-    plug CORSPlug, [origin: "http://localhost:4200"]
+    plug CORSPlug, [origin: "https://sheltered-temple-2654.herokuapp.com"]
     plug :accepts, ["json"]
   end
 
